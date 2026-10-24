@@ -4,7 +4,7 @@ This repository is the **Corresponding Source of a modified version** of ONLYOFF
 GNU Affero General Public License v3 (see `LICENSE`). It contains only our modification: a Dockerfile and a patch set.
 The base is the unmodified ONLYOFFICE source and the official `onlyoffice/documentserver` image.
 
-Status: work in progress. The Word editor is done and tested; the Spreadsheet and Presentation editors are not yet.
+Status: work in progress. The Word, Spreadsheet and Presentation mobile editors each have their hook module and a phone-size edit-and-save test (see "Tested so far").
 
 ## What and why
 The official Community package ships the three mobile web editors (Word, Cell, Slide) with editing switched off:
@@ -16,7 +16,7 @@ and overlays only the resulting js bundles on the official image. sdkjs, the ser
 
 ## This is a modified version
 - Base: unmodified `web-apps` tag `v10.0.0.169` and the official image `onlyoffice/documentserver:10.0.0`.
-- Changes: (1) `patches/documenteditor/patch.jsx`, our hook module for the Word mobile editor; (2)
+- Changes: (1) `patches/<editor>/patch.jsx`, our hook modules for the Word, Spreadsheet (Cell) and Presentation (Slide) mobile editors; (2)
   `patches/common/01-no-logo-and-legal-notice.patch`: no ONLYOFFICE logo in the mobile navbar, and a modified-version notice with
   this source link in the About screen.
 - The copyright banner at the top of every `app.js` is kept (as in the official package) with an added line that says the
@@ -30,11 +30,11 @@ and overlays only the resulting js bundles on the official image. sdkjs, the ser
 ## Layout
 - `Dockerfile` multi-stage build: node 22 builds the mobile bundles from the public tag, the final stage overlays them on the official image.
 - `patches/common/*.patch` unified patches applied with `git apply`.
-- `patches/<editor>/patch.jsx` hook modules: `documenteditor` done; `spreadsheeteditor` and `presentationeditor` not written yet.
+- `patches/<editor>/patch.jsx` hook modules for `documenteditor`, `spreadsheeteditor` and `presentationeditor`.
 
 ## Build
     docker build -t signofile/documentserver:10.0.0-signofile1 \
-      --build-arg EDITORS="word" --build-arg BUILD_SUFFIX=-signofile1 .
+      --build-arg EDITORS="word cell slide" --build-arg BUILD_SUFFIX=-signofile1 .
 Build args: `WEBAPPS_TAG`, `PRODUCT_VERSION`, `BUILD_NUMBER` (must match the official image), `BUILD_SUFFIX`, `SOURCE_URL`
 (the link shown in About), `PATCHES` (`ours` or `stub`), `EDITORS` (words: `word cell slide`), `DS_IMAGE`.
 
@@ -56,15 +56,22 @@ applies the view restriction itself when the document is opened, and only the ed
 4. Check that `git apply` still works for the common patches (`page/main.jsx` logo toggle, `lib/view/About.jsx`).
 5. Rebuild, run a phone-size edit-and-save test (tap the edit button, type, bold through the Edit sheet, force-save, open the saved file), then bump `BUILD_SUFFIX`.
 
-## Tested so far (Word, version 10.0.0.169-signofile1)
-In a phone-size session (iPhone viewport and user agent): no "viewing only" dialog, no ONLYOFFICE logo; after tapping the floating
-edit button the Add, Edit, Undo and Redo buttons work; text typed into the document and bold set from the Edit sheet are saved
-(the saved docx contains the text, in bold). The Edit sheet shows the Text and Paragraph tabs; the Add sheet lists table, shape,
-comment, image, link, page number, break, table of contents, footnote and drawing. Desktop editors are unchanged.
+## Tested so far (version 10.0.0.169-signofile1, phone-size session: iPhone viewport and user agent, headless Chrome)
+- Word: no "viewing only" dialog and no ONLYOFFICE logo; after tapping the floating edit button the Add, Edit, Undo and Redo
+  buttons work; text typed into the document and bold set from the Edit sheet are saved (the saved docx contains the text, in
+  bold). The Edit sheet shows the Text and Paragraph tabs; the Add sheet lists table, shape, comment, image, link, page number, break,
+  table of contents, footnote and drawing.
+- Presentation: Add, Edit and Undo buttons; the Edit sheet shows the Slide tab (theme, layout, transitions, background, duplicate and
+  delete slide); "Duplicate Slide" from the Edit sheet turned a 1-slide file into a saved 2-slide file.
+- Spreadsheet: Add, Edit and Undo buttons; the Edit sheet shows the Cell tab (font, bold/italic/underline/strike, text and fill colour,
+  text format, border style, number format, cell style); the Add sheet lists the functions, image, comment, sort and filter, link, table
+  and drawing; bold set on a selected cell from the Edit sheet is saved (cell A5 bold, A1 not).
+- Desktop editors are unchanged.
 
 ## Not done
-- Spreadsheet and Presentation hook modules.
-- Edit-mode context menu items (the default view-mode menu with copy, cut, paste, comment and link items is used), comment editing controllers, chart-style hook (the chart pages fetch their own previews).
+- Edit-mode context menu items (the default view-mode menu with copy, cut, paste, comment and link items is used), comment editing
+  controllers, chart-style hooks (the chart pages fetch their own previews), and Cell's formula-bar and cell-text editing flows have
+  not been exercised beyond the checks above. Only a small set of edits was tested per editor, not every Edit and Add page.
 - ONLYOFFICE sells mobile web editing as a commercial feature. Whether to use this build is a business and licensing decision for whoever runs it.
 
 ## Licence
