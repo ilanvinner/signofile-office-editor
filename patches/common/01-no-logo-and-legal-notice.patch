@@ -1,0 +1,71 @@
+diff --git a/apps/common/mobile/lib/view/About.jsx b/apps/common/mobile/lib/view/About.jsx
+index ab21c13..0389312 100644
+--- a/apps/common/mobile/lib/view/About.jsx
++++ b/apps/common/mobile/lib/view/About.jsx
+@@ -129,6 +129,13 @@ const PageAbout = props => {
+                             {__PUBLISHER_ADDRESS__}
+                         </p>
+                     </div>
++                    <div className="about__licensor" id="settings-about-modified">
++                        <p className="about__text">Modified version (Signofile). Editor based on ONLYOFFICE Docs.</p>
++                        <p className="about__text">&copy; Ascensio System SIA, GNU AGPL v3.</p>
++                        <p className="about__text">
++                            <Link external={true} target="_blank" href="SIGNOFILE_SOURCE_URL_PLACEHOLDER">Source of this modified version</Link>
++                        </p>
++                    </div>
+                     <div className="about__licensor" id="settings-about-licensor">
+                         <p className="about__text">{publisherName}</p>
+                         <p className="about__text">
+@@ -148,6 +155,13 @@ const PageAbout = props => {
+                             {__PUBLISHER_ADDRESS__}
+                         </p>
+                     </div>
++                    <div className="about__licensor" id="settings-about-modified">
++                        <p className="about__text">Modified version (Signofile). Editor based on ONLYOFFICE Docs.</p>
++                        <p className="about__text">&copy; Ascensio System SIA, GNU AGPL v3.</p>
++                        <p className="about__text">
++                            <Link external={true} target="_blank" href="SIGNOFILE_SOURCE_URL_PLACEHOLDER">Source of this modified version</Link>
++                        </p>
++                    </div>
+                     <div className="about__licensor">
+                         <p className="about__text" id="settings-about-name">{publisherName}</p>
+                         <p className="about__text">
+diff --git a/apps/documenteditor/mobile/src/page/main.jsx b/apps/documenteditor/mobile/src/page/main.jsx
+index 2ace195..2e8677e 100644
+--- a/apps/documenteditor/mobile/src/page/main.jsx
++++ b/apps/documenteditor/mobile/src/page/main.jsx
+@@ -108,7 +108,7 @@ const MainPage = inject('storeDocumentInfo', 'users', 'storeAppOptions', 'storeV
+                 customLogoUrl = logo.url;
+             }
+         } else {
+-            isHideLogo = false;
++            isHideLogo = true; // Signofile modification: the ONLYOFFICE logo is not shown
+         }
+     }
+ 
+diff --git a/apps/presentationeditor/mobile/src/page/main.jsx b/apps/presentationeditor/mobile/src/page/main.jsx
+index 52048ed..a8bb9bb 100644
+--- a/apps/presentationeditor/mobile/src/page/main.jsx
++++ b/apps/presentationeditor/mobile/src/page/main.jsx
+@@ -209,7 +209,7 @@ class MainPage extends Component {
+                     customLogoUrl = logo.url;
+                 }
+             } else {
+-                isHideLogo = false;
++                isHideLogo = true; // Signofile modification: the ONLYOFFICE logo is not shown
+             }
+         }
+ 
+diff --git a/apps/spreadsheeteditor/mobile/src/page/main.jsx b/apps/spreadsheeteditor/mobile/src/page/main.jsx
+index eba07a8..deff8ca 100644
+--- a/apps/spreadsheeteditor/mobile/src/page/main.jsx
++++ b/apps/spreadsheeteditor/mobile/src/page/main.jsx
+@@ -203,7 +203,7 @@ class MainPage extends Component {
+                     customLogoUrl = logo.url;
+                 }
+             } else {
+-                isHideLogo = false;
++                isHideLogo = true; // Signofile modification: the ONLYOFFICE logo is not shown
+             }
+         }
+ 
