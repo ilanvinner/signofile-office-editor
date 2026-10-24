@@ -46,7 +46,7 @@ RUN export BUILD_NUMBER="${BUILD_NUMBER}${BUILD_SUFFIX}"; mkdir -p /out; \
       # the official package prefixes app.js with the copyright banner below (verified byte-for-byte against the 10.0.0 image);
       # it is kept, and a modified build says so
       { printf '/*!\n * Copyright (c) Ascensio System SIA 2009-2026. All rights reserved\n *\n * http://www.onlyoffice.com \n *\n * Version: %s (build:%s)\n' "${PRODUCT_VERSION}" "${BUILD_NUMBER}"; \
-        [ "$PATCHES" = "ours" ] && printf ' * Modified by Signofile: mobile edit hooks, no ONLYOFFICE logo in the navbar, legal notice in About\n'; \
+        [ "$PATCHES" = "ours" ] && printf ' * Modified by Signofile: mobile edit hooks, no ONLYOFFICE logo in the navbar, legal notice in About, device pixel ratio capped at 2\n'; \
         printf ' */\n'; cat /out/$e/js/app.js; } > /tmp/app.js.banner && mv /tmp/app.js.banner /out/$e/js/app.js; \
     done
 
@@ -80,7 +80,7 @@ COPY --from=mobile-build /out /tmp/mobile-out
 RUN for d in /tmp/mobile-out/*; do e=$(basename $d); cp -a $d/js/. ${DS_PATH}/$e/mobile/dist/js/ && echo "replaced $e"; done; \
     find ${DS_PATH}/*/mobile/dist/js \( -name '*.gz' -o -name '*.map' \) -delete; \
     chown -R ds:ds ${DS_PATH}/*/mobile/dist/js; rm -rf /tmp/mobile-out; \
-    printf '%s\n' "Modified by Signofile (2026-10-23, 2026-10-24): mobile web editors built from the public web-apps source with additional edit hooks; desktop header logo removed; modified-version notice in About. Source: ${SOURCE_URL}" > /var/www/onlyoffice/documentserver/SIGNOFILE-MODIFIED.txt
+    printf '%s\n' "Modified by Signofile (2026-10-23, 2026-10-24, 2026-10-25): mobile web editors built from the public web-apps source with additional edit hooks; desktop header logo removed; device pixel ratio capped at 2 in the mobile editors; modified-version notice in About. Source: ${SOURCE_URL}" > /var/www/onlyoffice/documentserver/SIGNOFILE-MODIFIED.txt
 # the desktop patch: replace the two files, remove their stale precompressed copies (nginx serves a .gz next to the file when it exists)
 COPY --from=desktop-build /work/apps/common/main/lib/view/Header.js /work/apps/common/main/lib/view/About.js /tmp/desktop-out/
 RUN V=/var/www/onlyoffice/documentserver/web-apps/apps/common/main/lib/view; \

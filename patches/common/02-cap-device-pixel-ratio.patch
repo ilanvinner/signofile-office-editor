@@ -1,0 +1,62 @@
+diff --git a/apps/common/mobile/utils/dprCap.js b/apps/common/mobile/utils/dprCap.js
+new file mode 100644
+index 0000000..d1f4cf8
+--- /dev/null
++++ b/apps/common/mobile/utils/dprCap.js
+@@ -0,0 +1,17 @@
++/*
++ * Signofile modification: cap window.devicePixelRatio at 2 for the mobile editors.
++ *
++ * The editors draw the document on full-viewport canvases whose backing store is cssSize x devicePixelRatio. On a
++ * 3x phone that is 9/4 of the pixels of a 2x canvas to clear and repaint on every scroll step. The SDK reads
++ * window.devicePixelRatio when it is loaded, so this module has to run first (it is the first import of app.js).
++ * Pages are drawn at 2x and the browser scales them to the device; text is slightly softer than at native 3x.
++ * No effect on screens at 2x or below. This is a modified version of the Program.
++ */
++(function () {
++    try {
++        const real = window.devicePixelRatio || 1;
++        if (real > 2) {
++            Object.defineProperty(window, 'devicePixelRatio', { configurable: true, get: () => 2 });
++        }
++    } catch (e) { /* keep the real value */ }
++})();
+diff --git a/apps/documenteditor/mobile/src/app.js b/apps/documenteditor/mobile/src/app.js
+index 1b39e73..8c34078 100644
+--- a/apps/documenteditor/mobile/src/app.js
++++ b/apps/documenteditor/mobile/src/app.js
+@@ -34,6 +34,8 @@
+  */
+ 
+ // Import React and ReactDOM
++// Signofile: first import, caps window.devicePixelRatio at 2 before the SDK reads it
++import '../../../common/mobile/utils/dprCap.js';
+ import React, { Suspense } from 'react';
+ import { createRoot } from 'react-dom/client';
+ 
+diff --git a/apps/presentationeditor/mobile/src/app.js b/apps/presentationeditor/mobile/src/app.js
+index cb28887..ec802f7 100644
+--- a/apps/presentationeditor/mobile/src/app.js
++++ b/apps/presentationeditor/mobile/src/app.js
+@@ -34,6 +34,8 @@
+  */
+ 
+ // Import React and ReactDOM
++// Signofile: first import, caps window.devicePixelRatio at 2 before the SDK reads it
++import '../../../common/mobile/utils/dprCap.js';
+ import React, { Suspense } from 'react';
+ import { createRoot } from 'react-dom/client';
+ 
+diff --git a/apps/spreadsheeteditor/mobile/src/app.js b/apps/spreadsheeteditor/mobile/src/app.js
+index 7033158..2296c79 100644
+--- a/apps/spreadsheeteditor/mobile/src/app.js
++++ b/apps/spreadsheeteditor/mobile/src/app.js
+@@ -34,6 +34,8 @@
+  */
+ 
+ // Import React and ReactDOM
++// Signofile: first import, caps window.devicePixelRatio at 2 before the SDK reads it
++import '../../../common/mobile/utils/dprCap.js';
+ import React, { Suspense } from 'react';
+ import { createRoot } from 'react-dom/client';
+ 

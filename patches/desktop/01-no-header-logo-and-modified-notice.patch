@@ -30,7 +30,7 @@
 +                        '<td align="center" style="padding: 0 24px;">',
 +                        '<label class="asc-about-desc" dir="ltr" style="white-space: normal; text-align: center;">',
 +                        'Modified version of ONLYOFFICE Docs Community (c) Ascensio System SIA, licensed under the GNU AGPL v3 with its additional terms. ',
-+                        'Modified by Signofile on 2026-10-24 (the ONLYOFFICE logo is not shown in the editor header) and 2026-10-23 (mobile edit hooks). ',
++                        'Modified by Signofile on 2026-10-24 (the ONLYOFFICE logo is not shown in the editor header) and 2026-10-23 (mobile edit hooks), 2026-10-25 (device pixel ratio capped at 2 in the mobile editors). ',
 +                        'Source code of the modifications: <a href="SIGNOFILE_SOURCE_URL_PLACEHOLDER" target="_blank">SIGNOFILE_SOURCE_URL_PLACEHOLDER</a>',
 +                        '</label>',
 +                        '</td>',

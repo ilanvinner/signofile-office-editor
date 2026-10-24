@@ -7,7 +7,7 @@ index ab21c13..0389312 100644
                          </p>
                      </div>
 +                    <div className="about__licensor" id="settings-about-modified">
-+                        <p className="about__text">Modified version (Signofile). Editor based on ONLYOFFICE Docs.</p>
++                        <p className="about__text">Modified version (Signofile). Editor based on ONLYOFFICE Docs. Modified by Signofile: mobile edit hooks and no ONLYOFFICE logo in the navbar (2026-10-23), device pixel ratio capped at 2 (2026-10-25).</p>
 +                        <p className="about__text">&copy; Ascensio System SIA, GNU AGPL v3.</p>
 +                        <p className="about__text">
 +                            <Link external={true} target="_blank" href="SIGNOFILE_SOURCE_URL_PLACEHOLDER">Source of this modified version</Link>
@@ -21,7 +21,7 @@ index ab21c13..0389312 100644
                          </p>
                      </div>
 +                    <div className="about__licensor" id="settings-about-modified">
-+                        <p className="about__text">Modified version (Signofile). Editor based on ONLYOFFICE Docs.</p>
++                        <p className="about__text">Modified version (Signofile). Editor based on ONLYOFFICE Docs. Modified by Signofile: mobile edit hooks and no ONLYOFFICE logo in the navbar (2026-10-23), device pixel ratio capped at 2 (2026-10-25).</p>
 +                        <p className="about__text">&copy; Ascensio System SIA, GNU AGPL v3.</p>
 +                        <p className="about__text">
 +                            <Link external={true} target="_blank" href="SIGNOFILE_SOURCE_URL_PLACEHOLDER">Source of this modified version</Link>
