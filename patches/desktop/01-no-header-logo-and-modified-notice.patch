@@ -1,0 +1,40 @@
+--- a/apps/common/main/lib/view/Header.js
++++ b/apps/common/main/lib/view/Header.js
+@@ -160,7 +160,7 @@
+                         '</section>';
+ 
+         var templateLeftBox = '<section class="logo">' +
+-                                '<div id="header-logo"><i></i></div>' +
++                                '<div id="header-logo" class="hidden"><i></i></div>' +
+                             '</section>';
+ 
+         var templateTitleBox = '<section id="box-document-title">' +
+--- a/apps/common/main/lib/view/About.js
++++ b/apps/common/main/lib/view/About.js
+@@ -54,7 +54,7 @@
+         initialize: function(options) {
+             Common.UI.BaseView.prototype.initialize.call(this,arguments);
+ 
+-            this.txtVersionNum = '10.0.0.169';
++            this.txtVersionNum = 'SIGNOFILE_VERSION_PLACEHOLDER';
+ 
+             !(/\s$/.test(this.txtAddress)) && (this.txtAddress += " ");
+             !(/\s$/.test(this.txtMail)) && (this.txtMail += " ");
+@@ -159,6 +159,17 @@
+                             '<a href="<%= publisherurl %>" target="_blank"><% print(publisherurl.replace(/https?:\\/{2}/, "").replace(/\\/$/,"")) %></a>',
+                         '</td>',
+                     '</tr>',
++                '</table>',
++                '<table id="id-about-signofile-modified" cols="1" style="width: 100%; margin-top: 24px;">',
++                    '<tr>',
++                        '<td align="center" style="padding: 0 24px;">',
++                        '<label class="asc-about-desc" dir="ltr" style="white-space: normal; text-align: center;">',
++                        'Modified version of ONLYOFFICE Docs Community (c) Ascensio System SIA, licensed under the GNU AGPL v3 with its additional terms. ',
++                        'Modified by Signofile on 2026-10-24 (the ONLYOFFICE logo is not shown in the editor header) and 2026-10-23 (mobile edit hooks). ',
++                        'Source code of the modifications: <a href="SIGNOFILE_SOURCE_URL_PLACEHOLDER" target="_blank">SIGNOFILE_SOURCE_URL_PLACEHOLDER</a>',
++                        '</label>',
++                        '</td>',
++                    '</tr>',
+                 '</table>'
+             ].join(''));
+             this.menu = options.menu;

@@ -1,4 +1,4 @@
-# ONLYOFFICE Docs Community with edit hooks for the mobile web editors (Signofile build)
+# ONLYOFFICE Docs Community with edit hooks for the mobile web editors and no header logo in the desktop editors (Signofile build)
 
 This repository is the **Corresponding Source of a modified version** of ONLYOFFICE Docs Community, published under the
 GNU Affero General Public License v3 (see `LICENSE`). It contains only our modification: a Dockerfile and a patch set.
@@ -16,7 +16,7 @@ and overlays only the resulting js bundles on the official image. sdkjs, the ser
 
 ## This is a modified version
 - Base: unmodified `web-apps` tag `v10.0.0.169` and the official image `onlyoffice/documentserver:10.0.0`.
-- Changes: (1) `patches/<editor>/patch.jsx`, our hook modules for the Word, Spreadsheet (Cell) and Presentation (Slide) mobile editors; (2)
+- Changes: (0) `patches/desktop/01-no-header-logo-and-modified-notice.patch` (2026-10-24): in the desktop editors (Word, Spreadsheet, Presentation share these two files) the ONLYOFFICE logo is not shown in the editor header, and the About panel gets a notice that this is a modified version, with the dates of the modifications and the link to this source; the About panel still shows the original ONLYOFFICE logo, the publisher block and the version. (1) `patches/<editor>/patch.jsx`, our hook modules for the Word, Spreadsheet (Cell) and Presentation (Slide) mobile editors; (2)
   `patches/common/01-no-logo-and-legal-notice.patch`: no ONLYOFFICE logo in the mobile navbar, and a modified-version notice with
   this source link in the About screen.
 - The copyright banner at the top of every `app.js` is kept (as in the official package) with an added line that says the
@@ -25,9 +25,10 @@ and overlays only the resulting js bundles on the official image. sdkjs, the ser
   (c) Ascensio System SIA, GNU AGPL v3, and the link to this repository.
 - Marked as modified: version `10.0.0.169-signofile1` in the About screen and the bundle banner, the file
   `/var/www/onlyoffice/documentserver/SIGNOFILE-MODIFIED.txt` and image labels.
-- No trademark rights are granted by the licence. This build does not show the ONLYOFFICE logo and is not sold or branded as ONLYOFFICE.
+- No trademark rights are granted by the licence (Additional Terms, section 4). This build does not show the ONLYOFFICE logo in the editor header and is not sold or branded as ONLYOFFICE; the About panel identifies ONLYOFFICE (Ascensio System SIA) as the original developer, says this is a modified version, lists the dates of the modifications (2026-10-23 mobile edit hooks, 2026-10-24 header logo) and links this source, as the Additional Terms (sections 1 to 3) require. `LICENSE` is the upstream file including those Additional Terms.
 
 ## Layout
+- `patches/desktop/*.patch` unified patches (`patch -p1`) for two source files of the official image, `apps/common/main/lib/view/Header.js` and `About.js`; the Dockerfile applies them to the official image's copies of those files (they carry the package's filled-in placeholders) and replaces them, deleting their stale `.gz`.
 - `Dockerfile` multi-stage build: node 22 builds the mobile bundles from the public tag, the final stage overlays them on the official image.
 - `patches/common/*.patch` unified patches applied with `git apply`.
 - `patches/<editor>/patch.jsx` hook modules for `documenteditor`, `spreadsheeteditor` and `presentationeditor`.
@@ -76,3 +77,9 @@ applies the view restriction itself when the document is opened, and only the ed
 
 ## Licence
 GNU AGPL v3 (`LICENSE`). The files we replace or add carry the original Ascensio System SIA licence header. See the headers for the additional terms of the original files.
+
+## Tested: desktop editors (version 10.0.0.169-signofile2, 2026-10-24)
+- Word, desktop size, headless Chrome through our own host page: no ONLYOFFICE logo in the header; typing, forcesave and the callback work (a saved docx contains the typed text); the About panel (left bar, info icon) shows the original ONLYOFFICE logo and publisher block, "Version 10.0.0.169-signofile2", and the modified-version notice with dates and this link.
+- Phone-size session: unchanged from signofile1 (the mobile bundles are rebuilt from the same patches).
+- Spreadsheet and Presentation use the same two patched files (`apps/common/main/lib/view/Header.js`, `About.js`); they were not opened separately.
+
